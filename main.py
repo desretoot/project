@@ -26,5 +26,8 @@ model = load_model()
 
 result = st.button('Распознать изображение')
 if result:
-    predict = model(img)[0]
-    st.write(f"**Результаты распознавания: {predict['generated_text']}**")
+    try:
+        predict = model(img)[0]
+        st.write(f"**Результаты распознавания: {predict['generated_text']}**")
+    except ValueError:
+        st.write("Файл не найден, либо неверный формат файла")
