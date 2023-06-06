@@ -26,6 +26,5 @@ model = load_model()
 
 result = st.button('Распознать изображение')
 if result:
-    x = model(img)[0]
-    for _, v in x.items():
-        st.write(f'**Результаты распознавания: {v}**')
+    predict = model(img)[0]
+    st.write(f"**Результаты распознавания: {predict['generated_text']}**")
