@@ -33,3 +33,14 @@ def image_for_model(request):
     with open(request.param['img_path'], "rb") as fh:
         img = main.check_img(BytesIO(fh.read()))
         return {'img': img, 'theme': request.param['theme']}
+
+
+@pytest.fixture
+def model():
+    return pipeline("image-to-text", model="nlpconnect/vit-gpt2-image-captioning")
+
+
+def test_model_pred(image_for_model, model):
+    predict = main.model_pred(image_for_model['img'], model)
+    assert isinstance(predict, str)
+    assert image_for_model['theme'] in predict
